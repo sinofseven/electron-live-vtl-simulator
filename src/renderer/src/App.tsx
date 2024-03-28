@@ -3,7 +3,7 @@ import { faSun } from '@fortawesome/free-regular-svg-icons'
 import { faMoon } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import { ChangeEvent, JSX, useEffect, useState } from 'react'
+import { ChangeEvent, JSX, KeyboardEvent, useEffect, useState } from 'react'
 
 import Styles from './App.module.css'
 import { DEFAULT_TEXT_DATA, DEFAULT_TEXT_TEMPLATE } from './default_values'
@@ -25,6 +25,12 @@ function App(): JSX.Element {
       setTextData(text)
     } else {
       setTextTemplate(text)
+    }
+  }
+
+  function pushKeyTab(e: KeyboardEvent<HTMLTextAreaElement>): void {
+    if (e.code === 'Tab') {
+      e.preventDefault()
     }
   }
 
@@ -99,9 +105,11 @@ function App(): JSX.Element {
               </ul>
             </div>
             <textarea
+              id="InputText"
               className={classNames('textarea', Styles.Editor)}
               value={textInput}
               onChange={updateTextInput}
+              onKeyDown={pushKeyTab}
             />
           </div>
           <div className="column">
